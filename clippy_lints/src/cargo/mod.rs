@@ -1,5 +1,6 @@
 mod common_metadata;
 mod feature_name;
+mod imexplicit_dependencies;
 mod multiple_crate_versions;
 mod wildcard_dependencies;
 
@@ -162,6 +163,22 @@ declare_clippy_lint! {
     "wildcard dependencies being used"
 }
 
+declare_clippy_lint! {
+    /// ### What it does
+    /// Checks for imexplicit dependencies in the `Cargo.toml`.
+    /// ### Why is this bad?
+    /// it is encourage to use explicit dependencies like "1.1.0".
+    /// ### Example
+    /// ```toml
+    /// [dependencies]
+    /// regex = "1.9.5"
+    /// ``````
+    #[clippy::version = "1.74.0"]
+    pub IMEXPLICIT_DEPENDENCIES,
+    cargo,
+    "imexplicit dependencies being used"
+}
+
 pub struct Cargo {
     pub ignore_publish: bool,
 }
@@ -171,7 +188,8 @@ impl_lint_pass!(Cargo => [
     REDUNDANT_FEATURE_NAMES,
     NEGATIVE_FEATURE_NAMES,
     MULTIPLE_CRATE_VERSIONS,
-    WILDCARD_DEPENDENCIES
+    WILDCARD_DEPENDENCIES,
+    IMEXPLICIT_DEPENDENCIES,
 ]);
 
 impl LateLintPass<'_> for Cargo {
@@ -181,6 +199,7 @@ impl LateLintPass<'_> for Cargo {
             REDUNDANT_FEATURE_NAMES,
             NEGATIVE_FEATURE_NAMES,
             WILDCARD_DEPENDENCIES,
+            IMEXPLICIT_DEPENDENCIES,
         ];
         static WITH_DEPS_LINTS: &[&Lint] = &[MULTIPLE_CRATE_VERSIONS];
 
@@ -193,6 +212,7 @@ impl LateLintPass<'_> for Cargo {
                     common_metadata::check(cx, &metadata, self.ignore_publish);
                     feature_name::check(cx, &metadata);
                     wildcard_dependencies::check(cx, &metadata);
+                    imexplicit_dependencies::check(cx, &metadata)
                 },
                 Err(e) => {
                     for lint in NO_DEPS_LINTS {
