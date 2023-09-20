@@ -1,5 +1,6 @@
 mod common_metadata;
 mod feature_name;
+mod invalid_crate_name;
 mod multiple_crate_versions;
 mod wildcard_dependencies;
 
@@ -162,6 +163,22 @@ declare_clippy_lint! {
     "wildcard dependencies being used"
 }
 
+declare_clippy_lint! {
+    /// ### What it does
+    /// Checks for crate name based on user defined rules, like start with specify prefix and so on.
+    /// ### Example
+    /// ```toml
+    // [package]
+    // name = "ylong_clippytest"
+    // version = "0.1.0"
+    // edition = "2021"
+    /// ```
+    #[clippy::version = "1.74.0"]
+    pub INVALID_CRATE_NAME,
+    cargo,
+    "invalid crate name being used"
+}
+
 pub struct Cargo {
     pub ignore_publish: bool,
 }
@@ -171,7 +188,8 @@ impl_lint_pass!(Cargo => [
     REDUNDANT_FEATURE_NAMES,
     NEGATIVE_FEATURE_NAMES,
     MULTIPLE_CRATE_VERSIONS,
-    WILDCARD_DEPENDENCIES
+    WILDCARD_DEPENDENCIES,
+    INVALID_CRATE_NAME,
 ]);
 
 impl LateLintPass<'_> for Cargo {
@@ -181,6 +199,7 @@ impl LateLintPass<'_> for Cargo {
             REDUNDANT_FEATURE_NAMES,
             NEGATIVE_FEATURE_NAMES,
             WILDCARD_DEPENDENCIES,
+            INVALID_CRATE_NAME,
         ];
         static WITH_DEPS_LINTS: &[&Lint] = &[MULTIPLE_CRATE_VERSIONS];
 
@@ -193,6 +212,7 @@ impl LateLintPass<'_> for Cargo {
                     common_metadata::check(cx, &metadata, self.ignore_publish);
                     feature_name::check(cx, &metadata);
                     wildcard_dependencies::check(cx, &metadata);
+                    invalid_crate_name::check(cx, &metadata);
                 },
                 Err(e) => {
                     for lint in NO_DEPS_LINTS {

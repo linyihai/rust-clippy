@@ -1,0 +1,6 @@
+[package]
+name = "ylong_invalid_crate_name"
+version = "0.1.0"
+publish = false
+
+[workspace]
