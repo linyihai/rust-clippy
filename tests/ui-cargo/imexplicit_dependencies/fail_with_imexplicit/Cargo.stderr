@@ -1,6 +1,0 @@
-error: imexplicit dependency for `regex`
-  |
-  = note: `-D clippy::imexplicit-dependencies` implied by `-D warnings`
-  = help: to override `-D warnings` add `#[allow(clippy::imexplicit_dependencies)]`
-
-error: could not compile `imexplicit_dependencies` (bin "imexplicit_dependencies") due to previous error

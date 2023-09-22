@@ -1,4 +1,4 @@
-use super::IMEXPLICIT_DEPENDENCIES;
+use super::IMPLICIT_DEPENDENCIES;
 use cargo_metadata::Metadata;
 use clippy_utils::diagnostics::span_lint;
 use if_chain::if_chain;
@@ -15,9 +15,9 @@ pub(super) fn check(cx: &LateContext<'_>, metadata: &Metadata) {
             then {
                 span_lint(
                     cx,
-                    IMEXPLICIT_DEPENDENCIES,
+                    IMPLICIT_DEPENDENCIES,
                     DUMMY_SP,
-                    &format!("imexplicit dependency for `{}`", dep.name),
+                    &format!("implicit dependency for `{}`", dep.name),
                 );
             }
         }
