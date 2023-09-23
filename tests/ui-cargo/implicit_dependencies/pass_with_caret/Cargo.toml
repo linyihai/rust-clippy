@@ -6,4 +6,4 @@ publish = false
 [workspace]
 
 [dependencies]
-regex = ">= 1.2"
+regex = "^1.9.5"

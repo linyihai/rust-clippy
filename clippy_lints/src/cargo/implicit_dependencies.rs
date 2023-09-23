@@ -33,8 +33,13 @@ fn is_explicit_version(req: &semver::VersionReq) -> bool {
     let minor = req.comparators[0].minor.unwrap_or_default();
     let patch = req.comparators[0].patch.unwrap_or_default();
 
-    if let Ok(expect_version) = semver::VersionReq::parse(&format!("{major}.{minor}.{patch}")) {
-        return req == &expect_version;
-    }
-    false
+    vec![format!("{major}.{minor}.{patch}"), format!("={major}.{minor}.{patch}")]
+        .iter()
+        .map(|ver| {
+            if let Ok(expect_ver) = semver::VersionReq::parse(&ver) {
+                return &expect_ver == req;
+            }
+            false
+        })
+        .any(|t| t)
 }

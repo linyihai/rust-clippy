@@ -1,0 +1,9 @@
+[package]
+name = "implicit_dependencies"
+version = "0.1.0"
+publish = false
+
+[workspace]
+
+[dependencies]
+regex = "=1.9.5"

@@ -1,0 +1,6 @@
+error: implicit dependency for `regex`
+  |
+  = note: `-D clippy::implicit-dependencies` implied by `-D warnings`
+  = help: to override `-D warnings` add `#[allow(clippy::implicit_dependencies)]`
+
+error: could not compile `implicit_dependencies` (bin "implicit_dependencies") due to previous error
