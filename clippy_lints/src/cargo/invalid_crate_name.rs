@@ -20,10 +20,5 @@ pub(super) fn check(cx: &LateContext<'_>, metadata: &Metadata) {
 
 fn is_valid_crate_name(name: &str) -> bool {
     let prefix_names = vec!["ylong_", "huawei_"];
-    for p_name in prefix_names {
-        if name.starts_with(p_name) {
-            return true;
-        }
-    }
-    false
+    prefix_names.iter().any(|p| name.starts_with(p))
 }

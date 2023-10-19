@@ -1,0 +1,6 @@
+error: crate name `invalid_crate_name` not start with ylong_ or huawei_ .
+  |
+  = note: `-D clippy::invalid-crate-name` implied by `-D warnings`
+  = help: to override `-D warnings` add `#[allow(clippy::invalid_crate_name)]`
+
+error: could not compile `invalid_crate_name` (bin "invalid_crate_name") due to previous error
