@@ -1,5 +1,5 @@
 [package]
-name = "huawei_invalid_crate_name"
+name = "huawei_prefix_pass"
 version = "0.1.0"
 publish = false
 

@@ -1,5 +1,5 @@
 [package]
-name = "ylong_invalid_crate_name"
+name = "ylong_prefix_pass"
 version = "0.1.0"
 publish = false
 
